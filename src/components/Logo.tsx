@@ -11,7 +11,7 @@ export function Logo({ size = 32, withText = false }: { size?: number; withText?
       </div>
       {withText && (
         <span className="text-lg font-semibold tracking-tight text-charcoal-700">
-          Codify<span class="text-charcoal-400">AI</span>
+          Codify<span className="text-charcoal-400">AI</span>
         </span>
       )}
     </div>

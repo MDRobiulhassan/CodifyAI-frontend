@@ -21,18 +21,14 @@ export function AccountPage() {
     Promise.all([
       api.getSubscription().catch(() => null),
       api.getTodayUsage().catch(() => null),
-    ]).then(([s, u]) => {
-      setSubscription(s);
-      setUsage(u);
-      setLoading(false);
-    });
+    ]).then(([s, u]) => { setSubscription(s); setUsage(u); setLoading(false); });
   }, []);
 
   const usagePct = usage ? Math.min(100, (usage.messagesUsed / Math.max(1, usage.messageLimit)) * 100) : 0;
 
   return (
-    <div className="min-h-screen bg-ink-950">
-      <header className="sticky top-0 z-30 glass border-b border-ink-700/60">
+    <div className="min-h-screen bg-cream-100">
+      <header className="sticky top-0 z-30 bg-cream-100/80 backdrop-blur-md border-b border-cream-200">
         <div className="mx-auto max-w-5xl px-5 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2.5"><Logo size={30} withText /></Link>
           <div className="flex items-center gap-3">
@@ -43,17 +39,16 @@ export function AccountPage() {
       </header>
 
       <div className="mx-auto max-w-3xl px-5 py-10">
-        <Link to="/dashboard" className="inline-flex items-center gap-1.5 text-sm text-ink-400 hover:text-ink-200 mb-6">
+        <Link to="/dashboard" className="inline-flex items-center gap-1.5 text-sm text-charcoal-400 hover:text-charcoal-700 mb-6">
           <ArrowLeft size={15} /> Back to dashboard
         </Link>
-        <h1 className="text-2xl font-bold text-ink-100">Account</h1>
-        <p className="text-ink-400 text-sm mt-1">Manage your profile, usage, and billing.</p>
+        <h1 className="text-2xl font-semibold text-charcoal-700 tracking-tight">Account</h1>
+        <p className="text-charcoal-400 text-sm mt-1">Manage your profile, usage, and billing.</p>
 
         {loading ? (
           <CenterSpinner />
         ) : (
           <div className="mt-8 space-y-5">
-            {/* Profile */}
             <Section title="Profile" icon={UserIcon}>
               <div className="grid sm:grid-cols-2 gap-4">
                 <Field label="Name" value={user?.name} />
@@ -61,36 +56,34 @@ export function AccountPage() {
               </div>
             </Section>
 
-            {/* Usage */}
             {usage && (
               <Section title="Today's usage" icon={TrendingUp}>
                 <div className="space-y-3">
                   <div>
                     <div className="flex items-center justify-between text-xs mb-2">
-                      <span className="text-ink-300">Messages</span>
-                      <span className="text-ink-400">{usage.messagesUsed} / {usage.messageLimit}</span>
+                      <span className="text-charcoal-600">Messages</span>
+                      <span className="text-charcoal-400">{usage.messagesUsed} / {usage.messageLimit}</span>
                     </div>
-                    <div className="h-2 rounded-full bg-ink-700 overflow-hidden">
-                      <div className="h-full bg-gradient-to-r from-brand-400 to-brand-500 transition-all" style={{ width: `${usagePct}%` }} />
+                    <div className="h-2 rounded-full bg-cream-200 overflow-hidden">
+                      <div className="h-full bg-charcoal-700 transition-all" style={{ width: `${usagePct}%` }} />
                     </div>
                   </div>
                   {usage.projectLimit != null && (
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-ink-300">Projects</span>
-                      <span className="text-ink-400">{usage.projectsUsed ?? 0} / {usage.projectLimit}</span>
+                      <span className="text-charcoal-600">Projects</span>
+                      <span className="text-charcoal-400">{usage.projectsUsed ?? 0} / {usage.projectLimit}</span>
                     </div>
                   )}
                 </div>
               </Section>
             )}
 
-            {/* Billing */}
             <Section title="Billing" icon={CreditCard}>
               {subscription ? (
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div>
-                    <p className="text-sm font-medium text-ink-100">Current plan: {subscription.planName}</p>
-                    <p className="text-xs text-ink-400 mt-0.5">
+                    <p className="text-sm font-medium text-charcoal-700">Current plan: {subscription.planName}</p>
+                    <p className="text-xs text-charcoal-400 mt-0.5">
                       Status: <span className="capitalize">{subscription.status}</span>
                       {subscription.currentPeriodEnd && ` · renews ${new Date(subscription.currentPeriodEnd).toLocaleDateString()}`}
                     </p>
@@ -98,14 +91,9 @@ export function AccountPage() {
                   <button
                     onClick={async () => {
                       setPortalLoading(true);
-                      try {
-                        const res = await api.openPortal();
-                        if (res.url) window.location.href = res.url;
-                      } catch {
-                        toast('error', 'Could not open billing portal.');
-                      } finally {
-                        setPortalLoading(false);
-                      }
+                      try { const res = await api.openPortal(); if (res.url) window.location.href = res.url; }
+                      catch { toast('error', 'Could not open billing portal.'); }
+                      finally { setPortalLoading(false); }
                     }}
                     className="btn-outline px-4 py-2 text-sm"
                   >
@@ -114,8 +102,8 @@ export function AccountPage() {
                 </div>
               ) : (
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                  <p className="text-sm text-ink-400">You're on the free plan. Upgrade for more power.</p>
-                  <Link to="/pricing" className="btn-primary px-4 py-2 text-sm">View plans</Link>
+                  <p className="text-sm text-charcoal-400">You're on the free plan. Upgrade for more power.</p>
+                  <Link to="/pricing" className="btn-dark px-4 py-2 text-sm">View plans</Link>
                 </div>
               )}
             </Section>
@@ -129,8 +117,8 @@ export function AccountPage() {
 function Section({ title, icon: Icon, children }: { title: string; icon: typeof UserIcon; children: React.ReactNode }) {
   return (
     <div className="card p-5">
-      <h2 className="text-sm font-semibold text-ink-100 flex items-center gap-2 mb-4">
-        <Icon size={16} className="text-brand-400" /> {title}
+      <h2 className="text-sm font-semibold text-charcoal-700 flex items-center gap-2 mb-4">
+        <Icon size={16} className="text-charcoal-500" /> {title}
       </h2>
       {children}
     </div>
@@ -140,9 +128,9 @@ function Section({ title, icon: Icon, children }: { title: string; icon: typeof 
 function Field({ label, value, icon: Icon }: { label: string; value?: string; icon?: typeof Mail }) {
   return (
     <div>
-      <p className="text-xs text-ink-400 mb-1">{label}</p>
-      <div className="flex items-center gap-2 text-sm text-ink-100">
-        {Icon && <Icon size={14} className="text-ink-400" />}
+      <p className="text-xs text-charcoal-400 mb-1">{label}</p>
+      <div className="flex items-center gap-2 text-sm text-charcoal-700">
+        {Icon && <Icon size={14} className="text-charcoal-400" />}
         {value || '—'}
       </div>
     </div>

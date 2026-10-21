@@ -3,7 +3,7 @@ import type { ChatMessage } from '../types';
 import { api } from '../api';
 import { useAuth } from '../auth';
 import { toast } from './Toast';
-import { Send, Sparkles, Loader2, User as UserIcon, CornerDownLeft, Square } from 'lucide-react';
+import { Send, Sparkles, Loader2, CornerDownLeft, Square } from 'lucide-react';
 
 interface ChatPanelProps {
   projectId: number;
@@ -211,4 +211,3 @@ function renderInline(text: string): React.ReactNode {
   );
 }
 
-export const _u = UserIcon;
