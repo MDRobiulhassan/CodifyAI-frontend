@@ -4,14 +4,14 @@ export function Logo({ size = 32, withText = false }: { size?: number; withText?
   return (
     <div className="flex items-center gap-2.5">
       <div
-        className="relative grid place-items-center rounded-xl bg-gradient-to-br from-brand-400 to-brand-600 text-ink-950 shadow-glow-sm"
+        className="relative grid place-items-center rounded-lg bg-charcoal-700 text-cream-50 shadow-btn-dark"
         style={{ width: size, height: size }}
       >
-        <Terminal size={size * 0.55} strokeWidth={2.5} />
+        <Terminal size={size * 0.5} strokeWidth={2.5} />
       </div>
       {withText && (
-        <span className="text-lg font-bold tracking-tight text-ink-100">
-          Codify<span className="text-brand-400">AI</span>
+        <span className="text-lg font-semibold tracking-tight text-charcoal-700">
+          Codify<span class="text-charcoal-400">AI</span>
         </span>
       )}
     </div>

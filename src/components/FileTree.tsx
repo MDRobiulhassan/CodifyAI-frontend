@@ -29,11 +29,11 @@ function TreeItem({
       <div>
         <button
           onClick={() => setOpen((v) => !v)}
-          className="w-full flex items-center gap-1.5 px-2 py-1.5 rounded-md hover:bg-ink-800/70 text-ink-200"
+          className="w-full flex items-center gap-1.5 px-2 py-1.5 rounded-md hover:bg-cream-200 text-charcoal-700"
           style={{ paddingLeft: depth * 12 + 8 }}
         >
-          {open ? <ChevronDown size={14} className="text-ink-400" /> : <ChevronRight size={14} className="text-ink-400" />}
-          {open ? <FolderOpen size={14} className="text-brand-400" /> : <Folder size={14} className="text-brand-400" />}
+          {open ? <ChevronDown size={14} className="text-charcoal-400" /> : <ChevronRight size={14} className="text-charcoal-400" />}
+          {open ? <FolderOpen size={14} className="text-charcoal-500" /> : <Folder size={14} className="text-charcoal-500" />}
           <span className="truncate">{node.name}</span>
         </button>
         {open && node.children && (
@@ -51,11 +51,11 @@ function TreeItem({
     <button
       onClick={() => onSelect(node.path)}
       className={`w-full flex items-center gap-1.5 px-2 py-1.5 rounded-md transition ${
-        isSelected ? 'bg-brand-400/10 text-brand-300' : 'text-ink-300 hover:bg-ink-800/70 hover:text-ink-100'
+        isSelected ? 'bg-charcoal-700/[0.06] text-charcoal-700 font-medium' : 'text-charcoal-400 hover:bg-cream-200 hover:text-charcoal-700'
       }`}
       style={{ paddingLeft: depth * 12 + 28 }}
     >
-      <FileIcon size={13} className={isSelected ? 'text-brand-400' : 'text-ink-400'} />
+      <FileIcon size={13} className={isSelected ? 'text-charcoal-700' : 'text-charcoal-400'} />
       <span className="truncate">{node.name}</span>
     </button>
   );

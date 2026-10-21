@@ -17,9 +17,9 @@ export function toast(type: ToastType, message: string) {
 }
 
 const config: Record<ToastType, { icon: typeof CheckCircle2; color: string }> = {
-  success: { icon: CheckCircle2, color: 'text-brand-400' },
-  error: { icon: XCircle, color: 'text-danger-400' },
-  info: { icon: Info, color: 'text-ink-300' },
+  success: { icon: CheckCircle2, color: 'text-charcoal-700' },
+  error: { icon: XCircle, color: 'text-red-600' },
+  info: { icon: Info, color: 'text-charcoal-400' },
 };
 
 export function ToastHost() {
@@ -43,13 +43,13 @@ export function ToastHost() {
         return (
           <div
             key={t.id}
-            className="glass flex items-start gap-3 rounded-xl px-4 py-3 shadow-panel animate-fade-up min-w-[260px] max-w-sm"
+            className="card flex items-start gap-3 rounded-lg px-4 py-3 shadow-card-hover animate-fade-up min-w-[260px] max-w-sm"
           >
             <Icon size={18} className={`${color} mt-0.5 shrink-0`} />
-            <p className="text-sm text-ink-100 flex-1">{t.message}</p>
+            <p className="text-sm text-charcoal-700 flex-1">{t.message}</p>
             <button
               onClick={() => setToasts((arr) => arr.filter((x) => x.id !== t.id))}
-              className="text-ink-400 hover:text-ink-200"
+              className="text-charcoal-400 hover:text-charcoal-700"
             >
               <X size={14} />
             </button>

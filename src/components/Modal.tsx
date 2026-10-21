@@ -26,12 +26,12 @@ export function Modal({ open, onClose, title, children, className = '' }: ModalP
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fade-in">
-      <div className="absolute inset-0 bg-ink-950/80 backdrop-blur-sm" onClick={onClose} />
-      <div className={`relative z-10 w-full max-w-md card shadow-panel animate-scale-in ${className}`}>
+      <div className="absolute inset-0 bg-charcoal-700/30 backdrop-blur-sm" onClick={onClose} />
+      <div className={`relative z-10 w-full max-w-md card-lg shadow-card-hover animate-scale-in ${className}`}>
         {title && (
-          <div className="flex items-center justify-between border-b border-ink-700/60 px-5 py-4">
-            <h3 className="font-semibold text-ink-100">{title}</h3>
-            <button onClick={onClose} className="btn-ghost rounded-lg p-1.5">
+          <div className="flex items-center justify-between border-b border-cream-200 px-5 py-4">
+            <h3 className="font-semibold text-charcoal-700">{title}</h3>
+            <button onClick={onClose} className="btn-ghost rounded-md p-1.5">
               <X size={18} />
             </button>
           </div>

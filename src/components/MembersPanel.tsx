@@ -16,9 +16,9 @@ interface MembersPanelProps {
 }
 
 const ROLE_META: Record<MemberRole, { label: string; icon: typeof Crown; color: string }> = {
-  OWNER: { label: 'Owner', icon: Crown, color: 'text-warn-400' },
-  EDITOR: { label: 'Editor', icon: Pencil, color: 'text-brand-400' },
-  VIEWER: { label: 'Viewer', icon: Eye, color: 'text-ink-300' },
+  OWNER: { label: 'Owner', icon: Crown, color: 'text-charcoal-700' },
+  EDITOR: { label: 'Editor', icon: Pencil, color: 'text-charcoal-500' },
+  VIEWER: { label: 'Viewer', icon: Eye, color: 'text-charcoal-400' },
 };
 
 export function MembersPanel({ projectId, open, onClose }: MembersPanelProps) {
@@ -42,9 +42,7 @@ export function MembersPanel({ projectId, open, onClose }: MembersPanelProps) {
     }
   };
 
-  useEffect(() => {
-    if (open) load();
-  }, [open, projectId]);
+  useEffect(() => { if (open) load(); }, [open, projectId]);
 
   const invite = async () => {
     if (!inviteEmail.trim()) return;
@@ -90,15 +88,14 @@ export function MembersPanel({ projectId, open, onClose }: MembersPanelProps) {
   return (
     <Modal open={open} onClose={onClose} title="Members" className="max-w-lg">
       <div className="space-y-5">
-        {/* Invite form */}
         {canManage && (
-          <div className="rounded-xl bg-ink-800/60 border border-ink-700/60 p-4">
-            <p className="text-sm font-medium text-ink-100 mb-3 flex items-center gap-2">
-              <UserPlus size={15} className="text-brand-400" /> Invite a teammate
+          <div className="rounded-xl bg-cream-50 border border-cream-200 p-4">
+            <p className="text-sm font-medium text-charcoal-700 mb-3 flex items-center gap-2">
+              <UserPlus size={15} className="text-charcoal-500" /> Invite a teammate
             </p>
             <div className="flex flex-col sm:flex-row gap-2">
               <div className="relative flex-1">
-                <Mail size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-400" />
+                <Mail size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-charcoal-400" />
                 <input
                   type="email"
                   className="input pl-9 py-2 text-sm"
@@ -116,14 +113,13 @@ export function MembersPanel({ projectId, open, onClose }: MembersPanelProps) {
                 <option value="VIEWER">Viewer</option>
                 <option value="OWNER">Owner</option>
               </select>
-              <button onClick={invite} disabled={inviting || !inviteEmail.trim()} className="btn-primary py-2 px-4 text-sm">
+              <button onClick={invite} disabled={inviting || !inviteEmail.trim()} className="btn-dark py-2 px-4 text-sm">
                 {inviting ? '…' : 'Invite'}
               </button>
             </div>
           </div>
         )}
 
-        {/* Members list */}
         {loading ? (
           <CenterSpinner />
         ) : (
@@ -133,44 +129,44 @@ export function MembersPanel({ projectId, open, onClose }: MembersPanelProps) {
               const RoleIcon = meta.icon;
               const initials = (m.name || m.username).split(/\s+/).slice(0, 2).map((s) => s[0]?.toUpperCase()).join('');
               return (
-                <div key={m.id} className="flex items-center gap-3 rounded-xl bg-ink-800/40 px-3 py-2.5">
-                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-ink-500 to-ink-700 grid place-items-center text-ink-100 text-xs font-semibold shrink-0">
+                <div key={m.id} className="flex items-center gap-3 rounded-lg bg-cream-50 border border-cream-200 px-3 py-2.5">
+                  <div className="w-9 h-9 rounded-full bg-charcoal-600 grid place-items-center text-cream-50 text-xs font-semibold shrink-0">
                     {initials || 'U'}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-ink-100 truncate">
+                    <p className="text-sm font-medium text-charcoal-700 truncate">
                       {m.name || m.username}
-                      {m.username === user?.username && <span className="ml-2 text-xs text-ink-500">(you)</span>}
+                      {m.username === user?.username && <span className="ml-2 text-xs text-charcoal-400">(you)</span>}
                     </p>
-                    <p className="text-xs text-ink-400 truncate">{m.username}</p>
+                    <p className="text-xs text-charcoal-400 truncate">{m.username}</p>
                   </div>
-                  <span className={`chip bg-ink-800 ${meta.color} border border-ink-700/60`}>
+                  <span className={`chip bg-cream-100 ${meta.color} border border-cream-200`}>
                     <RoleIcon size={12} /> {meta.label}
                   </span>
                   {canManage && m.username !== user?.username && (
                     <div className="relative">
                       <button
                         onClick={() => setMenuFor(menuFor === m.id ? null : m.id)}
-                        className="btn-ghost rounded-lg p-1.5"
+                        className="btn-ghost rounded-md p-1.5"
                       >
                         <MoreVertical size={15} />
                       </button>
                       {menuFor === m.id && (
-                        <div className="absolute right-0 mt-1 w-44 card shadow-panel p-1 z-20">
+                        <div className="absolute right-0 mt-1 w-44 card shadow-card-hover p-1 z-20">
                           {(Object.keys(ROLE_META) as MemberRole[]).filter((r) => r !== m.role).map((r) => (
                             <button
                               key={r}
                               onClick={() => changeRole(m.id, r)}
-                              className="w-full flex items-center gap-2 px-3 py-2 text-sm text-ink-200 hover:bg-ink-800 rounded-lg"
+                              className="w-full flex items-center gap-2 px-3 py-2 text-sm text-charcoal-600 hover:bg-cream-200 rounded-md"
                             >
                               {(() => { const I = ROLE_META[r].icon; return <I size={14} className={ROLE_META[r].color} /> })()}
                               Make {ROLE_META[r].label.toLowerCase()}
                             </button>
                           ))}
-                          <div className="h-px bg-ink-700/60 my-1" />
+                          <div className="h-px bg-cream-200 my-1" />
                           <button
                             onClick={() => remove(m.id)}
-                            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-danger-400 hover:bg-ink-800 rounded-lg"
+                            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-cream-200 rounded-md"
                           >
                             <Trash2 size={14} /> Remove
                           </button>
@@ -182,7 +178,7 @@ export function MembersPanel({ projectId, open, onClose }: MembersPanelProps) {
               );
             })}
             {members.length === 0 && (
-              <p className="text-sm text-ink-400 text-center py-6">No members yet.</p>
+              <p className="text-sm text-charcoal-400 text-center py-6">No members yet.</p>
             )}
           </div>
         )}
@@ -196,4 +192,3 @@ export function MembersPanel({ projectId, open, onClose }: MembersPanelProps) {
     </Modal>
   );
 }
-
