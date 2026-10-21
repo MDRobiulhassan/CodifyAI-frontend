@@ -44,7 +44,7 @@ export function AuthPage({ mode }: { mode: Mode }) {
       <div className="relative lg:w-1/2 overflow-hidden hidden lg:flex flex-col justify-between p-12 bg-charcoal-700">
         <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle at 30% 20%, rgba(255,255,255,0.4), transparent 50%), radial-gradient(circle at 70% 80%, rgba(255,255,255,0.3), transparent 50%)' }} />
         <Link to="/" className="relative">
-          <Logo size={34} withText />
+          <Logo size={34} withText variant="light" />
         </Link>
         <div className="relative">
           <h2 className="text-3xl font-semibold text-cream-50 leading-tight tracking-tight">

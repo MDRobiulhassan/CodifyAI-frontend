@@ -191,7 +191,7 @@ export function DashboardPage() {
 
 function NewProjectCard({ onClick }: { onClick: () => void }) {
   return (
-    <button onClick={onClick} className="card p-5 border-dashed border-cream-300 hover:border-charcoal-700/40 hover:bg-cream-50 transition group text-left">
+    <button onClick={onClick} className="card p-5 border-cream-200 hover:border-charcoal-700/40 hover:bg-cream-50 transition group text-left">
       <div className="w-10 h-10 rounded-full bg-cream-200 grid place-items-center text-charcoal-400 group-hover:text-charcoal-700 transition">
         <FolderPlus size={18} />
       </div>

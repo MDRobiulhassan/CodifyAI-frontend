@@ -1,6 +1,8 @@
 import { Terminal } from 'lucide-react';
 
-export function Logo({ size = 32, withText = false }: { size?: number; withText?: boolean }) {
+export function Logo({ size = 32, withText = false, variant = 'dark' }: { size?: number; withText?: boolean; variant?: 'dark' | 'light' }) {
+  const textColor = variant === 'light' ? 'text-cream-50' : 'text-charcoal-700';
+  const accentColor = variant === 'light' ? 'text-cream-200' : 'text-charcoal-400';
   return (
     <div className="flex items-center gap-2.5">
       <div
@@ -10,8 +12,8 @@ export function Logo({ size = 32, withText = false }: { size?: number; withText?
         <Terminal size={size * 0.5} strokeWidth={2.5} />
       </div>
       {withText && (
-        <span className="text-lg font-semibold tracking-tight text-charcoal-700">
-          Codify<span className="text-charcoal-400">AI</span>
+        <span className={`text-lg font-semibold tracking-tight ${textColor}`}>
+          Codify<span className={accentColor}>AI</span>
         </span>
       )}
     </div>
