@@ -8,9 +8,10 @@ interface ModalProps {
   title?: string;
   children: ReactNode;
   className?: string;
+  dark?: boolean;
 }
 
-export function Modal({ open, onClose, title, children, className = '' }: ModalProps) {
+export function Modal({ open, onClose, title, children, className = '', dark = false }: ModalProps) {
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
@@ -27,11 +28,11 @@ export function Modal({ open, onClose, title, children, className = '' }: ModalP
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fade-in">
       <div className="absolute inset-0 bg-charcoal-700/30 backdrop-blur-sm" onClick={onClose} />
-      <div className={`relative z-10 w-full max-w-md card-lg shadow-card-hover animate-scale-in ${className}`}>
+      <div className={`relative z-10 w-full max-w-md card-lg shadow-card-hover animate-scale-in ${dark ? 'bg-[#242424] border-white/10 text-white' : ''} ${className}`}>
         {title && (
-          <div className="flex items-center justify-between border-b border-cream-200 px-5 py-4">
-            <h3 className="font-semibold text-charcoal-700">{title}</h3>
-            <button onClick={onClose} className="btn-ghost rounded-md p-1.5">
+          <div className={`flex items-center justify-between px-5 py-4 ${dark ? 'border-b border-white/10' : 'border-b border-cream-200'}`}>
+            <h3 className={`font-semibold ${dark ? 'text-white' : 'text-charcoal-700'}`}>{title}</h3>
+            <button onClick={onClose} className={dark ? 'rounded-md p-1.5 text-white/70 hover:bg-white/10' : 'btn-ghost rounded-md p-1.5'}>
               <X size={18} />
             </button>
           </div>

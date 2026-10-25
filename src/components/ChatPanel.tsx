@@ -79,20 +79,20 @@ export function ChatPanel({ projectId, messages, setMessages }: ChatPanelProps) 
   };
 
   return (
-    <div className="flex flex-col h-full bg-cream-100">
-      <div className="flex items-center gap-2 px-4 h-11 border-b border-cream-200 text-sm font-medium text-charcoal-700">
-        <Sparkles size={15} className="text-charcoal-500" /> Chat
-        <span className="ml-auto text-xs text-charcoal-400">{messages.length} messages</span>
+    <div className="flex flex-col h-full bg-[#202020] text-white">
+      <div className="flex items-center gap-2 px-4 h-11 border-b border-white/10 text-sm font-medium text-white">
+        <Sparkles size={15} className="text-blue-400" /> Chat
+        <span className="ml-auto text-xs text-white/45">{messages.length} messages</span>
       </div>
 
       <div ref={scrollRef} className="flex-1 overflow-y-auto scrollbar-thin p-4 space-y-4">
         {messages.length === 0 && (
           <div className="h-full flex flex-col items-center justify-center text-center px-6 py-10">
-            <div className="w-12 h-12 rounded-full bg-cream-200 text-charcoal-500 grid place-items-center mb-4">
+            <div className="w-12 h-12 rounded-full bg-white/10 text-white/70 grid place-items-center mb-4">
               <Sparkles size={24} />
             </div>
-            <h3 className="font-semibold text-charcoal-700">Start building</h3>
-            <p className="mt-1.5 text-sm text-charcoal-400 max-w-xs">
+            <h3 className="font-semibold text-white">Start building</h3>
+            <p className="mt-1.5 text-sm text-white/45 max-w-xs">
               Describe what you want to build or change. CodifyAI will generate the code and update the preview.
             </p>
             <div className="mt-5 flex flex-col gap-2 w-full max-w-xs">
@@ -100,7 +100,7 @@ export function ChatPanel({ projectId, messages, setMessages }: ChatPanelProps) 
                 <button
                   key={p}
                   onClick={() => send(p)}
-                  className="text-left text-sm rounded-md bg-cream-50 border border-cream-200 px-3 py-2 text-charcoal-600 hover:border-charcoal-700/40 hover:text-charcoal-700 transition"
+                  className="text-left text-sm rounded-md bg-[#292929] border border-white/10 px-3 py-2 text-white/70 hover:border-white/30 hover:text-white transition"
                 >
                   {p}
                 </button>
@@ -114,8 +114,8 @@ export function ChatPanel({ projectId, messages, setMessages }: ChatPanelProps) 
         ))}
       </div>
 
-      <div className="border-t border-cream-200 p-3">
-        <div className="card flex items-end gap-2 focus-within:ring-2 focus-within:ring-link-400/40 transition">
+      <div className="border-t border-white/10 p-3">
+        <div className="mx-3 mb-1 flex items-end gap-2 rounded-xl border border-white/10 bg-[#292929] px-2 focus-within:ring-2 focus-within:ring-blue-400/40 transition">
           <textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -127,11 +127,11 @@ export function ChatPanel({ projectId, messages, setMessages }: ChatPanelProps) 
             }}
             placeholder="Describe a change or new feature…"
             rows={1}
-            className="flex-1 bg-transparent border-0 outline-none resize-none text-sm text-charcoal-700 placeholder:text-charcoal-400 py-1.5 px-1 max-h-32"
+            className="flex-1 bg-transparent border-0 outline-none resize-none text-sm text-white placeholder:text-white/40 py-1.5 px-1 max-h-32"
             style={{ minHeight: 36 }}
           />
           {sending ? (
-            <button onClick={stop} className="btn-ghost bg-red-600 text-cream-50 border-red-600 px-3 py-2 text-sm shrink-0">
+            <button onClick={stop} className="rounded-md bg-red-600 px-3 py-2 text-sm text-white shrink-0">
               <Square size={14} /> Stop
             </button>
           ) : (
@@ -144,7 +144,7 @@ export function ChatPanel({ projectId, messages, setMessages }: ChatPanelProps) 
             </button>
           )}
         </div>
-        <p className="mt-2 text-[11px] text-charcoal-400 flex items-center gap-1 px-1">
+        <p className="mt-2 text-[11px] text-white/45 flex items-center gap-1 px-1">
           <CornerDownLeft size={11} /> Enter to send · Shift+Enter for newline
         </p>
       </div>
@@ -160,17 +160,17 @@ function MessageBubble({ message, userName }: { message: ChatMessage; userName?:
   return (
     <div className={`flex gap-3 ${isUser ? 'flex-row-reverse' : ''}`}>
       <div className={`w-7 h-7 rounded-full grid place-items-center shrink-0 text-xs font-semibold ${
-        isUser ? 'bg-charcoal-600 text-cream-50' : 'bg-charcoal-700 text-cream-50 shadow-btn-dark'
+        isUser ? 'bg-white/15 text-white' : 'bg-blue-500 text-white shadow-btn-dark'
       }`}>
         {isUser ? (initials || 'U') : <Sparkles size={14} />}
       </div>
       <div className={`max-w-[82%] rounded-xl px-3.5 py-2.5 text-sm leading-relaxed ${
         isUser
-          ? 'bg-charcoal-700/[0.06] text-charcoal-700 rounded-tr-sm'
-          : 'bg-cream-200 text-charcoal-700 rounded-tl-sm'
+          ? 'bg-blue-500/15 text-white rounded-tr-sm'
+          : 'bg-[#292929] text-white rounded-tl-sm'
       }`}>
         {isStreaming ? (
-          <span className="flex items-center gap-2 text-charcoal-400">
+          <span className="flex items-center gap-2 text-white/45">
             <Loader2 size={14} className="animate-spin" /> Generating…
           </span>
         ) : (
@@ -204,7 +204,7 @@ function renderInline(text: string): React.ReactNode {
   const parts = text.split(/(`[^`]+`)/g);
   return parts.map((p, i) =>
     p.startsWith('`') && p.endsWith('`') ? (
-      <code key={i} className="bg-cream-200 rounded px-1.5 py-0.5 text-xs font-mono text-charcoal-600">{p.slice(1, -1)}</code>
+      <code key={i} className="bg-white/10 rounded px-1.5 py-0.5 text-xs font-mono text-white/80">{p.slice(1, -1)}</code>
     ) : (
       <span key={i}>{p}</span>
     )

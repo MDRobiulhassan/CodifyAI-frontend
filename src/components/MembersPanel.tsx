@@ -17,8 +17,8 @@ interface MembersPanelProps {
 
 const ROLE_META: Record<MemberRole, { label: string; icon: typeof Crown; color: string }> = {
   OWNER: { label: 'Owner', icon: Crown, color: 'text-charcoal-700' },
-  EDITOR: { label: 'Editor', icon: Pencil, color: 'text-charcoal-500' },
-  VIEWER: { label: 'Viewer', icon: Eye, color: 'text-charcoal-400' },
+  EDITOR: { label: 'Editor', icon: Pencil, color: 'text-blue-400' },
+  VIEWER: { label: 'Viewer', icon: Eye, color: 'text-white/45' },
 };
 
 export function MembersPanel({ projectId, open, onClose }: MembersPanelProps) {
@@ -86,26 +86,26 @@ export function MembersPanel({ projectId, open, onClose }: MembersPanelProps) {
   const canManage = currentUserRole === 'OWNER' || currentUserRole === 'EDITOR';
 
   return (
-    <Modal open={open} onClose={onClose} title="Members" className="max-w-lg">
+    <Modal open={open} onClose={onClose} title="Share project" dark className="max-w-lg">
       <div className="space-y-5">
         {canManage && (
-          <div className="rounded-xl bg-cream-50 border border-cream-200 p-4">
-            <p className="text-sm font-medium text-charcoal-700 mb-3 flex items-center gap-2">
-              <UserPlus size={15} className="text-charcoal-500" /> Invite a teammate
+          <div className="rounded-xl bg-[#2c2c2c] border border-white/10 p-4">
+            <p className="text-sm font-medium text-white mb-3 flex items-center gap-2">
+              <UserPlus size={15} className="text-blue-400" /> Invite a teammate
             </p>
             <div className="flex flex-col sm:flex-row gap-2">
               <div className="relative flex-1">
-                <Mail size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-charcoal-400" />
+                <Mail size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/45" />
                 <input
                   type="email"
-                  className="input pl-9 py-2 text-sm"
+                  className="w-full rounded-md border border-white/10 bg-[#1b1b1b] px-9 py-2 text-sm text-white placeholder:text-white/40 outline-none focus:border-blue-400/60"
                   placeholder="teammate@example.com"
                   value={inviteEmail}
                   onChange={(e) => setInviteEmail(e.target.value)}
                 />
               </div>
               <select
-                className="input py-2 text-sm w-full sm:w-32"
+                className="rounded-md border border-white/10 bg-[#1b1b1b] px-3 py-2 text-sm text-white outline-none w-full sm:w-32"
                 value={inviteRole}
                 onChange={(e) => setInviteRole(e.target.value as MemberRole)}
               >
@@ -129,44 +129,44 @@ export function MembersPanel({ projectId, open, onClose }: MembersPanelProps) {
               const RoleIcon = meta.icon;
               const initials = (m.name || m.username).split(/\s+/).slice(0, 2).map((s) => s[0]?.toUpperCase()).join('');
               return (
-                <div key={m.id} className="flex items-center gap-3 rounded-lg bg-cream-50 border border-cream-200 px-3 py-2.5">
+                <div key={m.id} className="flex items-center gap-3 rounded-lg bg-[#2c2c2c] border border-white/10 px-3 py-2.5">
                   <div className="w-9 h-9 rounded-full bg-charcoal-600 grid place-items-center text-cream-50 text-xs font-semibold shrink-0">
                     {initials || 'U'}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-charcoal-700 truncate">
+                    <p className="text-sm font-medium text-white truncate">
                       {m.name || m.username}
-                      {m.username === user?.username && <span className="ml-2 text-xs text-charcoal-400">(you)</span>}
+                      {m.username === user?.username && <span className="ml-2 text-xs text-white/45">(you)</span>}
                     </p>
-                    <p className="text-xs text-charcoal-400 truncate">{m.username}</p>
+                    <p className="text-xs text-white/45 truncate">{m.username}</p>
                   </div>
-                  <span className={`chip bg-cream-100 ${meta.color} border border-cream-200`}>
+                  <span className={`chip bg-white/10 ${meta.color} border border-white/10`}>
                     <RoleIcon size={12} /> {meta.label}
                   </span>
                   {canManage && m.username !== user?.username && (
                     <div className="relative">
                       <button
                         onClick={() => setMenuFor(menuFor === m.id ? null : m.id)}
-                        className="btn-ghost rounded-md p-1.5"
+                        className="rounded-md p-1.5 text-white/50 hover:bg-white/10"
                       >
                         <MoreVertical size={15} />
                       </button>
                       {menuFor === m.id && (
-                        <div className="absolute right-0 mt-1 w-44 card shadow-card-hover p-1 z-20">
+                        <div className="absolute right-0 mt-1 w-44 rounded-lg border border-white/10 bg-[#2c2c2c] shadow-2xl p-1 z-20">
                           {(Object.keys(ROLE_META) as MemberRole[]).filter((r) => r !== m.role).map((r) => (
                             <button
                               key={r}
                               onClick={() => changeRole(m.id, r)}
-                              className="w-full flex items-center gap-2 px-3 py-2 text-sm text-charcoal-600 hover:bg-cream-200 rounded-md"
+                              className="w-full flex items-center gap-2 px-3 py-2 text-sm text-white/75 hover:bg-white/10 rounded-md"
                             >
                               {(() => { const I = ROLE_META[r].icon; return <I size={14} className={ROLE_META[r].color} /> })()}
                               Make {ROLE_META[r].label.toLowerCase()}
                             </button>
                           ))}
-                          <div className="h-px bg-cream-200 my-1" />
+                          <div className="h-px bg-white/10 my-1" />
                           <button
                             onClick={() => remove(m.id)}
-                            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-cream-200 rounded-md"
+                            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-300 hover:bg-white/10 rounded-md"
                           >
                             <Trash2 size={14} /> Remove
                           </button>
@@ -178,13 +178,13 @@ export function MembersPanel({ projectId, open, onClose }: MembersPanelProps) {
               );
             })}
             {members.length === 0 && (
-              <p className="text-sm text-charcoal-400 text-center py-6">No members yet.</p>
+              <p className="text-sm text-white/45 text-center py-6">No members yet.</p>
             )}
           </div>
         )}
 
         <div className="flex justify-end">
-          <button onClick={onClose} className="btn-ghost px-4 py-2 text-sm">
+          <button onClick={onClose} className="rounded-md border border-white/10 px-4 py-2 text-sm text-white/75 hover:bg-white/10">
             <X size={15} /> Close
           </button>
         </div>

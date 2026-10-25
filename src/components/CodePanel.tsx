@@ -74,16 +74,16 @@ export function CodePanel({ projectId }: CodePanelProps) {
   }
 
   return (
-    <div className="flex h-full bg-cream-100">
-      <div className="w-56 shrink-0 border-r border-cream-200 overflow-y-auto scrollbar-thin bg-cream-50">
-        <div className="px-3 py-2 text-[11px] uppercase tracking-wider text-charcoal-400 font-semibold">Files</div>
+    <div className="flex h-full bg-[#202020] text-white">
+      <div className="w-56 shrink-0 border-r border-white/10 overflow-y-auto scrollbar-thin bg-[#202020]">
+        <div className="px-3 py-2 text-[11px] uppercase tracking-wider text-white/45 font-semibold">Files</div>
         <FileTree nodes={tree} selectedPath={selected} onSelect={openFile} />
       </div>
       <div className="flex-1 flex flex-col min-w-0">
         {selected ? (
           <>
-            <div className="flex items-center gap-2 px-4 h-9 border-b border-cream-200 text-xs text-charcoal-400 font-mono">
-              <FileIcon size={12} className="text-charcoal-400" /> {selected}
+            <div className="flex items-center gap-2 px-4 h-9 border-b border-white/10 text-xs text-white/45 font-mono">
+              <FileIcon size={12} className="text-white/45" /> {selected}
             </div>
             <div className="flex-1 overflow-auto scrollbar-thin bg-charcoal-800">
               {loadingFile ? (
@@ -98,7 +98,7 @@ export function CodePanel({ projectId }: CodePanelProps) {
             </div>
           </>
         ) : (
-          <div className="flex-1 flex items-center justify-center text-sm text-charcoal-400">
+          <div className="flex-1 flex items-center justify-center text-sm text-white/45">
             Select a file to view its contents
           </div>
         )}

@@ -131,7 +131,7 @@ function Field({ label, value, icon: Icon }: { label: string; value?: string; ic
       <p className="text-xs text-charcoal-400 mb-1">{label}</p>
       <div className="flex items-center gap-2 text-sm text-charcoal-700">
         {Icon && <Icon size={14} className="text-charcoal-400" />}
-        {value || '—'}
+        {value || 'Not set'}
       </div>
     </div>
   );

@@ -103,7 +103,7 @@ export function SiteFooter() {
           <div className="md:col-span-2">
             <Logo size={30} withText />
             <p className="mt-4 max-w-sm text-sm text-charcoal-400 leading-relaxed">
-              CodifyAI turns plain-English prompts into full-stack web apps. Build, preview, and ship — all in one place.
+              CodifyAI turns plain-English prompts into full-stack web apps. Build, preview, and ship, all in one place.
             </p>
           </div>
           <div>

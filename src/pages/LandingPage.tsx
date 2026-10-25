@@ -31,7 +31,7 @@ const FAQ = [
   { q: 'Do I need to know how to code?', a: 'No. You describe your app in plain English and CodifyAI handles the rest. The code is yours to export or deploy whenever you like.' },
   { q: 'Can I collaborate with my team?', a: 'Yes. Every project supports members with OWNER, EDITOR, or VIEWER roles, so you can invite collaborators and build together.' },
   { q: 'What plans are available?', a: 'We offer a free tier to get started plus paid plans with higher message and project limits. See the pricing section for details.' },
-  { q: 'Can I deploy my app?', a: 'Yes — apps built with CodifyAI can be previewed live in the editor and deployed when ready.' },
+  { q: 'Can I deploy my app?', a: 'Yes. Apps built with CodifyAI can be previewed live in the editor and deployed when ready.' },
 ];
 
 export function LandingPage() {
@@ -70,7 +70,7 @@ export function LandingPage() {
             with a single prompt
           </h1>
           <p className="mt-6 text-lg text-charcoal-400 max-w-2xl mx-auto leading-relaxed animate-fade-up" style={{ animationDelay: '120ms' }}>
-            CodifyAI turns plain English into production-ready web apps. Describe your idea, watch it build in real time, and ship — no code required.
+            CodifyAI turns plain English into production-ready web apps. Describe your idea, watch it build in real time, and ship, with no code required.
           </p>
 
           <div className="mt-10 max-w-2xl mx-auto animate-fade-up" style={{ animationDelay: '180ms' }}>
@@ -123,13 +123,13 @@ export function LandingPage() {
       {/* Features */}
       <section id="features" className="py-24">
         <div className="mx-auto max-w-6xl px-5">
-          <SectionHeading eyebrow="Features" title="Everything you need to build" subtitle="A complete AI development environment in your browser — from first prompt to deployed app." />
+          <SectionHeading eyebrow="Features" title="Everything you need to build" subtitle="A complete AI development environment in your browser, from first prompt to deployed app." />
           <div className="mt-14 grid gap-5 md:grid-cols-3">
             <FeatureCard icon={MessageSquare} title="Chat to build" desc="Describe changes in plain English. The AI edits your project and shows the result instantly." />
             <FeatureCard icon={Eye} title="Live preview" desc="See your app update in real time as the AI writes code. No refresh, no waiting." />
             <FeatureCard icon={Code2} title="Full source access" desc="Browse every file the AI creates. Clean, readable code you own and can export." />
             <FeatureCard icon={Users} title="Team collaboration" desc="Invite teammates with role-based access. Build together, review together." />
-            <FeatureCard icon={Layers} title="Full-stack by default" desc="Frontend, backend, database — all generated and wired up automatically." />
+            <FeatureCard icon={Layers} title="Full-stack by default" desc="Frontend, backend, database, all generated and wired up automatically." />
             <FeatureCard icon={Rocket} title="One-click deploy" desc="Go from preview to production in a click. Your app, live on the internet." />
           </div>
         </div>
@@ -169,7 +169,7 @@ export function LandingPage() {
               { n: '03', icon: Rocket, title: 'Iterate & ship', desc: 'Refine through chat, invite your team, and deploy when your app is ready.' },
             ].map((step) => (
               <div key={step.n} className="card p-6 relative overflow-hidden group hover:shadow-card-hover transition">
-                <div className="absolute -top-4 -right-2 text-7xl font-semibold text-cream-200 select-none">{step.n}</div>
+                <div className="absolute top-5 right-5 text-xs font-medium text-charcoal-300">Step {step.n}</div>
                 <div className="relative">
                   <div className="w-11 h-11 rounded-full bg-cream-200 text-charcoal-600 grid place-items-center mb-4">
                     <step.icon size={22} />

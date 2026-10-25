@@ -51,7 +51,7 @@ export function AuthPage({ mode }: { mode: Mode }) {
             {mode === 'signup' ? 'Start building apps with AI' : 'Welcome back to CodifyAI'}
           </h2>
           <p className="mt-4 text-cream-200 max-w-md leading-relaxed">
-            Describe what you want. Watch it build in real time. Ship to production — all from your browser.
+            Describe what you want. Watch it build in real time. Ship to production, all from your browser.
           </p>
           <ul className="mt-8 space-y-3">
             {['AI builds full-stack apps from prompts', 'Live preview as code is generated', 'Invite your team and build together'].map((f) => (
