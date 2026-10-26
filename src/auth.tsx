@@ -13,9 +13,19 @@ interface AuthContextValue {
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
+const USER_KEY = 'codifyai_user';
+
+function getCachedUser(): User | null {
+  try {
+    const value = localStorage.getItem(USER_KEY);
+    return value ? JSON.parse(value) as User : null;
+  } catch {
+    return null;
+  }
+}
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(() => getToken() ? getCachedUser() : null);
   const [loading, setLoading] = useState(true);
 
   const refreshUser = useCallback(async () => {
@@ -27,10 +37,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
     try {
       const profile = await api.getProfile();
+      localStorage.setItem(USER_KEY, JSON.stringify(profile));
       setUser(profile);
-    } catch {
-      clearToken();
-      setUser(null);
+    } catch (error) {
+      const status = (error as Error & { status?: number }).status;
+      if (status === 401 || status === 403) {
+        clearToken();
+        localStorage.removeItem(USER_KEY);
+        setUser(null);
+      }
     } finally {
       setLoading(false);
     }
@@ -43,17 +58,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = useCallback(async (username: string, password: string) => {
     const res = await api.login(username, password);
     setToken(res.token);
+    localStorage.setItem(USER_KEY, JSON.stringify(res.user));
     setUser(res.user);
   }, []);
 
   const signup = useCallback(async (name: string, username: string, password: string) => {
     const res = await api.signup(name, username, password);
     setToken(res.token);
+    localStorage.setItem(USER_KEY, JSON.stringify(res.user));
     setUser(res.user);
   }, []);
 
   const logout = useCallback(() => {
     clearToken();
+    localStorage.removeItem(USER_KEY);
     setUser(null);
   }, []);
 

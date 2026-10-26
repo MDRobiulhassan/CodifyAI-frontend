@@ -8,6 +8,22 @@ interface RouterContextValue {
 
 const RouterContext = createContext<RouterContextValue | undefined>(undefined);
 
+export function getSafeReturnTo(value: string | null): string | null {
+  if (!value || value.length > 2048 || !value.startsWith('/') || value.startsWith('//')) return null;
+  try {
+    const url = new URL(value, window.location.origin);
+    if (url.origin !== window.location.origin) return null;
+    if (/^\/projects\/\d+$/.test(url.pathname) || url.pathname === '/account') return url.pathname;
+    if (url.pathname === '/dashboard') {
+      const prompt = url.searchParams.get('prompt')?.slice(0, 1000);
+      return prompt ? `/dashboard?prompt=${encodeURIComponent(prompt)}` : '/dashboard';
+    }
+  } catch {
+    return null;
+  }
+  return null;
+}
+
 export function RouterProvider({ children }: { children: ReactNode }) {
   const [path, setPath] = useState(() => window.location.pathname + window.location.search);
 

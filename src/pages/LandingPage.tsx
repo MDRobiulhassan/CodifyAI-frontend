@@ -2,15 +2,13 @@ import { useState } from 'react';
 import { Link, useRouter } from '../router';
 import { useAuth } from '../auth';
 import { Logo } from '../components/Logo';
-import imageOne from '../assets/images/image.png';
-import imageTwo from '../assets/images/image copy.png';
-import imageThree from '../assets/images/image copy 2.png';
+import { useTypewriterPlaceholder } from '../hooks/useTypewriterPlaceholder';
 import { ArrowRight, Check, Code2, Eye, MessageSquare, Users, Sparkles, Menu, X } from 'lucide-react';
 
 const examples = [
-  { name: 'DineFlow Pro', image: imageOne, label: 'Restaurant platform' },
-  { name: 'Shopfront Builder', image: imageTwo, label: 'Commerce experience' },
-  { name: 'Odyssey HR Hub', image: imageThree, label: 'Operations dashboard' },
+  { name: 'DineFlow Pro', image: '/assets/showcase/dineflow-pro.png', label: 'Restaurant platform' },
+  { name: 'Shopfront Builder', image: '/assets/showcase/shopfront.png', label: 'Commerce experience' },
+  { name: 'HR Hub', image: '/assets/showcase/hr-hub.png', label: 'Operations dashboard' },
 ];
 
 export function LandingPage() {
@@ -18,6 +16,7 @@ export function LandingPage() {
   const { navigate } = useRouter();
   const [prompt, setPrompt] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
+  const animatedPlaceholder = useTypewriterPlaceholder();
 
   const start = () => navigate(user ? '/dashboard' : '/signup');
   const submit = () => navigate(user ? `/dashboard?prompt=${encodeURIComponent(prompt)}` : `/signup?prompt=${encodeURIComponent(prompt)}`);
@@ -41,7 +40,7 @@ export function LandingPage() {
             <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm text-white/75 backdrop-blur"><Sparkles size={14} className="text-blue-300" /> Build with natural language</div>
             <h1 className="mx-auto mt-8 max-w-4xl text-5xl font-semibold leading-[1.02] tracking-[-0.06em] sm:text-7xl">Create apps by talking to AI.</h1>
             <p className="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-white/60">Describe your idea, watch CodifyAI build the project, then refine it through chat with a live preview beside you.</p>
-            <div className="mx-auto mt-10 max-w-3xl rounded-2xl border border-white/20 bg-[#202020]/95 p-3 text-left shadow-2xl"><textarea value={prompt} onChange={(event) => setPrompt(event.target.value)} onKeyDown={(event) => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); submit(); } }} rows={2} placeholder="Ask CodifyAI to build an app..." className="w-full resize-none bg-transparent px-3 py-2 text-base text-white outline-none placeholder:text-white/40" /><div className="flex items-center justify-between px-2 pt-2"><span className="text-xs text-white/35">Enter to start building</span><button onClick={submit} className="rounded-lg bg-white px-4 py-2 text-sm font-medium text-[#171717] hover:bg-white/90">Build <ArrowRight size={14} className="ml-1 inline" /></button></div></div>
+            <div className="mx-auto mt-10 max-w-3xl rounded-2xl border border-white/20 bg-[#202020]/95 p-3 text-left shadow-2xl"><textarea aria-label="Describe an app to build" value={prompt} onChange={(event) => setPrompt(event.target.value)} onKeyDown={(event) => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); submit(); } }} rows={2} placeholder={animatedPlaceholder} className="w-full resize-none bg-transparent px-3 py-2 text-base text-white outline-none placeholder:text-white/40" /><div className="flex items-center justify-between px-2 pt-2"><span className="text-xs text-white/35">Enter to start building</span><button onClick={submit} className="rounded-lg bg-white px-4 py-2 text-sm font-medium text-[#171717] hover:bg-white/90">Build <ArrowRight size={14} className="ml-1 inline" /></button></div></div>
             <div className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs text-white/50"><span><Check size={14} className="mr-1 inline text-blue-300" />No credit card</span><span><Check size={14} className="mr-1 inline text-blue-300" />Live preview</span><span><Check size={14} className="mr-1 inline text-blue-300" />Your source code</span></div>
           </div>
         </section>

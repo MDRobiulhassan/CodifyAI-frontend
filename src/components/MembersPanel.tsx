@@ -33,8 +33,9 @@ export function MembersPanel({ projectId, open, onClose }: MembersPanelProps) {
   const load = async () => {
     setLoading(true);
     try {
-      const data = await api.getMembers(projectId);
-      setMembers(Array.isArray(data) ? data : []);
+      const data = await api.getMembers(projectId) as ProjectMember[] | { members?: ProjectMember[] };
+      const list = Array.isArray(data) ? data : Array.isArray(data?.members) ? data.members : [];
+      setMembers(list.filter((member) => member && typeof member === 'object'));
     } catch {
       toast('error', 'Could not load members.');
     } finally {
@@ -82,8 +83,8 @@ export function MembersPanel({ projectId, open, onClose }: MembersPanelProps) {
     }
   };
 
-  const currentUserRole = members.find((m) => m.username === user?.username)?.role;
-  const canManage = currentUserRole === 'OWNER' || currentUserRole === 'EDITOR';
+  const currentUserRole = members.find((m) => m.username?.toLowerCase() === user?.username?.toLowerCase())?.role;
+  const canManage = currentUserRole !== 'VIEWER';
 
   return (
     <Modal open={open} onClose={onClose} title="Share project" dark className="max-w-lg">
@@ -125,25 +126,26 @@ export function MembersPanel({ projectId, open, onClose }: MembersPanelProps) {
         ) : (
           <div className="space-y-1.5">
             {members.map((m) => {
-              const meta = ROLE_META[m.role];
+              const meta = ROLE_META[m.role] ?? ROLE_META.VIEWER;
               const RoleIcon = meta.icon;
-              const initials = (m.name || m.username).split(/\s+/).slice(0, 2).map((s) => s[0]?.toUpperCase()).join('');
+              const memberName = m.name || m.username || 'Workspace member';
+              const initials = memberName.split(/\s+/).slice(0, 2).map((s) => s[0]?.toUpperCase()).join('');
               return (
-                <div key={m.id} className="flex items-center gap-3 rounded-lg bg-[#2c2c2c] border border-white/10 px-3 py-2.5">
+                <div key={m.id ?? m.username ?? initials} className="flex items-center gap-3 rounded-lg bg-[#2c2c2c] border border-white/10 px-3 py-2.5">
                   <div className="w-9 h-9 rounded-full bg-charcoal-600 grid place-items-center text-cream-50 text-xs font-semibold shrink-0">
                     {initials || 'U'}
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-white truncate">
-                      {m.name || m.username}
-                      {m.username === user?.username && <span className="ml-2 text-xs text-white/45">(you)</span>}
+                      {memberName}
+                      {m.username?.toLowerCase() === user?.username?.toLowerCase() && <span className="ml-2 text-xs text-white/45">(you)</span>}
                     </p>
-                    <p className="text-xs text-white/45 truncate">{m.username}</p>
+                    <p className="text-xs text-white/45 truncate">{m.username || 'Email unavailable'}</p>
                   </div>
                   <span className={`chip bg-white/10 ${meta.color} border border-white/10`}>
                     <RoleIcon size={12} /> {meta.label}
                   </span>
-                  {canManage && m.username !== user?.username && (
+                  {canManage && m.username?.toLowerCase() !== user?.username?.toLowerCase() && (
                     <div className="relative">
                       <button
                         onClick={() => setMenuFor(menuFor === m.id ? null : m.id)}

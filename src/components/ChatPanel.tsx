@@ -115,7 +115,7 @@ export function ChatPanel({ projectId, messages, setMessages }: ChatPanelProps) 
       </div>
 
       <div className="border-t border-white/10 p-3">
-        <div className="mx-3 mb-1 flex items-end gap-2 rounded-xl border border-white/10 bg-[#292929] px-2 focus-within:ring-2 focus-within:ring-blue-400/40 transition">
+        <div className="mb-1 flex items-end gap-2 rounded-xl border border-white/10 bg-[#292929] px-2 focus-within:ring-2 focus-within:ring-blue-400/40 transition">
           <textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -131,14 +131,14 @@ export function ChatPanel({ projectId, messages, setMessages }: ChatPanelProps) 
             style={{ minHeight: 36 }}
           />
           {sending ? (
-            <button onClick={stop} className="rounded-md bg-red-600 px-3 py-2 text-sm text-white shrink-0">
+            <button onClick={stop} className="inline-flex min-h-9 shrink-0 items-center justify-center gap-2 rounded-md bg-red-600 px-3 py-2 text-sm text-white">
               <Square size={14} /> Stop
             </button>
           ) : (
             <button
               onClick={() => send(input)}
               disabled={!input.trim()}
-              className="btn-dark px-3 py-2 text-sm shrink-0"
+              className="btn-dark min-h-9 shrink-0 px-3 py-2 text-sm"
             >
               <Send size={15} />
             </button>
@@ -170,7 +170,7 @@ function MessageBubble({ message, userName }: { message: ChatMessage; userName?:
           : 'bg-[#292929] text-white rounded-tl-sm'
       }`}>
         {isStreaming ? (
-          <span className="flex items-center gap-2 text-white/45">
+          <span className="flex items-center gap-2 text-blue-200">
             <Loader2 size={14} className="animate-spin" /> Generating…
           </span>
         ) : (

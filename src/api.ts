@@ -178,7 +178,7 @@ export const api = {
   },
   getChatHistory(projectId: number) {
     return request<{ messages: Array<{ role: string; content: string; timestamp?: string }> }>(
-      `/api/projects/${projectId}`
+      `/api/chat/projects/${projectId}`
     );
   },
 

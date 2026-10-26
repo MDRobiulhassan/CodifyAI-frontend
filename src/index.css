@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 html {
@@ -20,8 +20,8 @@ body {
 }
 
 ::selection {
-  background: rgba(28, 28, 28, 0.12);
-  color: #1c1c1c;
+  background: #2563eb;
+  color: #ffffff;
 }
 
 ::-webkit-scrollbar { width: 10px; height: 10px; }

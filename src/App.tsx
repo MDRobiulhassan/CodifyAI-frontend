@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { AuthProvider, useAuth } from './auth';
-import { RouterProvider, useRouter, useRoute } from './router';
+import { RouterProvider, useRouter, useRoute, getSafeReturnTo } from './router';
 import { ToastProvider } from './components/Toast';
 import { LoadingScreen } from './components/Spinner';
 import { LandingPage } from './pages/LandingPage';
@@ -18,9 +18,17 @@ function Routes() {
   // Redirect away from auth pages when already logged in
   useEffect(() => {
     if (user && (path === '/login' || path === '/signup')) {
-      navigate('/dashboard');
+      const returnTo = getSafeReturnTo(new URLSearchParams(window.location.search).get('returnTo'));
+      navigate(returnTo || '/dashboard');
     }
   }, [user, path, navigate]);
+
+  useEffect(() => {
+    if (!loading && !user && path !== '/' && path !== '/login' && path !== '/signup' && path !== '/pricing') {
+      const returnTo = getSafeReturnTo(window.location.pathname + window.location.search) || '/dashboard';
+      navigate(`/login?returnTo=${encodeURIComponent(returnTo)}`);
+    }
+  }, [loading, user, path, navigate]);
 
   if (loading) return <LoadingScreen label="Loading CodifyAI…" />;
 
